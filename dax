@@ -1,0 +1,279 @@
+[33mcommit 708a228987e97fccd708abd225de312308bf0ec1[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sat Sep 9 21:50:26 2023 +0200
+
+    fixes for info page
+
+[33mcommit 3c28aeed08f5184fff061a9c399ced2052c92dca[m
+Merge: 57dab32 276e959
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sat Sep 9 21:47:47 2023 +0200
+
+    Merge branch 'main' of https://github.com/freemanfl/wf-extension
+
+[33mcommit 57dab32fda91648e90717f1062e29fd75374d93c[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sat Sep 9 21:46:53 2023 +0200
+
+    fixes for info page
+
+[33mcommit 64f1f77c932ab30c90c74630e873a23afb0b15bb[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sat Sep 9 21:31:47 2023 +0200
+
+    big update to settings and settings & info page
+
+[33mcommit 276e959578dcfd4d4027c6d540b9a2a292dd88ea[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Thu Aug 24 14:13:51 2023 +0200
+
+    Update README.md
+
+[33mcommit e6b4b943045d20c5c88827dd17e35da0f3eaa602[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Aug 22 11:05:09 2023 +0200
+
+    foe and slice fixes
+
+[33mcommit fdb87ff1b8056bb270e59acd19d420a7f19503bb[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Aug 22 11:03:49 2023 +0200
+
+    foe and slice fixes
+
+[33mcommit 97b71851f59a526b74d3ebec6ef0580b137273e7[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Mon Aug 21 19:00:37 2023 +0200
+
+    locked pages fix
+
+[33mcommit a9b82d8e7eaa35b263025e01cd9dac137779d76f[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sun Aug 6 19:21:28 2023 +0200
+
+    settings to skip navigation added
+
+[33mcommit bce41718f4ee889acb21f4cb2b77440f724621c6[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sun Aug 6 19:20:46 2023 +0200
+
+    settings to skip navigation added
+
+[33mcommit 379495549da99b437413e329ac4940202915113a[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sat Aug 5 16:57:31 2023 +0200
+
+    polish
+
+[33mcommit f4f19198e1286f45aaaa0daf7037f4e893abf19c[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sat Aug 5 16:57:07 2023 +0200
+
+    polish
+
+[33mcommit 54eed6634f00a4839cfd0619b2f8645e03ea0335[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Jul 25 18:39:28 2023 +0200
+
+    height fixes and waitforelem function
+
+[33mcommit 1b5b72280feddb96d075e762fe3ee1523d233c4a[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Jun 6 14:14:47 2023 +0200
+
+    final clean
+
+[33mcommit cc50b84d15c7bc06f4b55df64d4daef591b0471b[m
+Merge: 9cb994f 2c9bf55
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Jun 6 14:12:52 2023 +0200
+
+    Merge branch 'main' of https://github.com/freemanfl/wf-extension
+
+[33mcommit 9cb994f07244cb5d7699dd8844cfd630b4399330[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Jun 6 14:12:26 2023 +0200
+
+    final clean
+
+[33mcommit fa7a0504b169397ceafb637a9f38e25921ac7a5c[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Jun 6 14:09:04 2023 +0200
+
+    display none for the form edition
+
+[33mcommit 2c9bf55c9dd963c32ddd3387f293fe6d8b465d6a[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Tue Jun 6 13:29:23 2023 +0200
+
+    Update README.md
+
+[33mcommit c63546483b2d02cb322b5f3e4c0d19accc51dae8[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Tue Jun 6 13:28:19 2023 +0200
+
+    Update README.md
+
+[33mcommit e6a4181192fb49b21196bbfce44a53e5c17f9553[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Tue Jun 6 13:27:01 2023 +0200
+
+    Update README.md
+
+[33mcommit 1e2831c1e0cda61e3f3d60d01a30b71fe4fec2f2[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Tue Jun 6 13:26:20 2023 +0200
+
+    Update README.md
+
+[33mcommit df8ba4c70557586ac1c8d098e3481e119754a60a[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue Jun 6 13:23:39 2023 +0200
+
+    display none for the form edition
+
+[33mcommit 371df98bb0d8bf133b5b45cb2d38d4ecd857e480[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Mon Jun 5 15:40:00 2023 +0200
+
+    minimize the container
+
+[33mcommit d992d413867bbf0b563068603e066a278a6f6aa7[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Wed May 24 14:04:54 2023 +0200
+
+    asdas
+
+[33mcommit 353f66202b1a60e37808405f5d6e801f55ae0ac5[m
+Merge: 0719027 626ca21
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Wed May 24 09:59:18 2023 +0200
+
+    Merge branch 'main' of https://github.com/freemanfl/wf-extension
+
+[33mcommit 071902798bfe49c5da6ac6e096d522b101288a1e[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Wed May 24 09:40:18 2023 +0200
+
+    lu changes fix
+
+[33mcommit 626ca21a9724f941338c9af804b7457dd7d32094[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Tue May 23 10:14:53 2023 +0200
+
+    Update README.md
+
+[33mcommit 9be446dcd21e5171b42bc29be866bf857cb70b2a[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Tue May 23 10:14:01 2023 +0200
+
+    Update README.md
+
+[33mcommit ba4306e484eb0ea4110c2a6924e24d4fda9beed7[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue May 23 09:58:26 2023 +0200
+
+    asdasd
+
+[33mcommit f991ec29335593f995146ca05d282e0247283a2d[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue May 23 09:57:28 2023 +0200
+
+    asdasd
+
+[33mcommit c93623baf02a79fd6ab9c79bdd07d2de9270bdd6[m
+Merge: f0d818f 3134e47
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue May 23 09:54:16 2023 +0200
+
+    Merge branch 'main' of https://github.com/freemanfl/wf-extension
+
+[33mcommit f0d818f39c581c9bcf259c1e6bd2e3698c6c1c80[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Tue May 23 09:53:53 2023 +0200
+
+    asdasd
+
+[33mcommit 3134e4725e0bf4fa3ed81e2a91846686897515fe[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Mon May 22 10:30:49 2023 +0200
+
+    Update README.md
+
+[33mcommit 62e2e4c610ad76d0c9cda8dd8776e3dfae48a04e[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Mon May 22 10:04:02 2023 +0200
+
+    Update README.md
+
+[33mcommit 7174ef7d7c6b63426ebddae57c6a92b02d624278[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Mon May 22 09:59:34 2023 +0200
+
+    Update README.md
+
+[33mcommit eb4b531287265f9518e643478c5e986a5abc07b7[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Mon May 22 09:54:29 2023 +0200
+
+    Update README.md
+
+[33mcommit b3e684e5f454f5587caad7e7d43af55237891a2c[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Sun May 21 22:31:20 2023 +0200
+
+    Update README.md
+
+[33mcommit f4c30656bc67fc54ddaf323d55ef6c534fb6617a[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Sun May 21 22:06:13 2023 +0200
+
+    Update README.md
+    
+    mire readme changes
+
+[33mcommit da80a4f077d68477c7da19a775da966132bedbd5[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Sun May 21 21:30:07 2023 +0200
+
+    Update README.md
+    
+    update readme 1
+
+[33mcommit 64250d4ad592d4e1fdc9276de7b0ae62208f8cbc[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sun May 21 21:17:15 2023 +0200
+
+    delete files
+
+[33mcommit 3560e760eb6afa9a4f0a17478c883f4689925ba0[m
+Merge: dc8b35c 218348d
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sun May 21 18:34:01 2023 +0200
+
+    Merge branch 'main' of https://github.com/freemanfl/wf-extension
+
+[33mcommit dc8b35cdee58b239530b276b62edfac5ec2f3cbf[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sun May 21 18:19:58 2023 +0200
+
+    final commit
+
+[33mcommit 218348dffea9e0a6b18b88cf172b660b02bc78e3[m
+Author: freemanfl <mm.farid@post.cz>
+Date:   Sun May 21 18:16:39 2023 +0200
+
+    Create README.md
+    
+    privacy policy
+
+[33mcommit c0621e05252659a42d6745ec0ff7ada027669959[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Sun May 21 12:39:11 2023 +0200
+
+    looks done
+
+[33mcommit 34309fac4b58bc38a10a8cad1fb673f01a9b6336[m
+Author: Farid Mammadbayov <farid.mammadbayov@yrbrands.com>
+Date:   Thu May 18 14:42:33 2023 +0200
+

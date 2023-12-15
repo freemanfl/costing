@@ -1,0 +1,30 @@
+html {
+  display: flex;
+  justify-content: center;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding-bottom: 50px;
+  font-size: 130%;
+  align-items: center;
+  max-width: 1000px;
+}
+
+img {
+  max-width: 600px;
+}
+
+#how-to-cont {
+  display: flex;
+}
+
+#how-to-cont ol {
+  font-size: 24px;
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+}

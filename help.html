@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="help.css" />
+    <title>Help & Info for Create Workflow extesnion</title>
+  </head>
+  <body>
+    <div id="en">
+      <h1>Help & Info</h1>
+      <h2>How to install</h2>
+      <ol>
+        <li>Open the link to Chrome Store</li>
+        <li>Click "Install"</li>
+        <li>
+          <p>
+            Every new JIRA ticket page you open from now will have an extra
+            section in bottom left that you can recogrnize by ">>"
+          </p>
+          <img src="./images/help/where-to-find.jpg" alt="how to use diagram" />
+        </li>
+      </ol>
+      <h2>How to use</h2>
+      <div id="how-to-cont">
+        <img
+          src="./images/help/how-to-use-diagram.jpg"
+          alt="how to use diagram"
+        />
+        <ol>
+          <li>Ticket name</li>
+          <li>Ticket ID</li>
+          <li>Wokrflow type</li>
+          <li>Market</li>
+          <li>Submarket</li>
+          <li>Settings button</li>
+          <li>Information & Help button</li>
+        </ol>
+      </div>
+      <p>
+        Application scans the whole page and automatically saves info needed,
+        like market country, ticket #, description.
+      </p>
+      <p>
+        You still have control and can edit text fields in case it makes a
+        mistake.
+      </p>
+      <h2>What can go wrong</h2>
+      <p>
+        First of all, this is just a robot on rails, if one of the steps fails,
+        the program can't continue.
+      </p>
+      <p>Obviously I tried to find workarounds, but still.</p>
+      <ul>
+        <li>
+          <p>
+            Do not change tabs while it's creating the workflow, it likes the
+            attention
+          </p>
+        </li>
+        <li>
+          <p>
+            Application <b>CAN NOT</b> pick the submarket for Belgium and
+            Switzerland, it automatically defaults to NL for Belgium and DE for
+            Switzerland
+          </p>
+          <p><b>For CH and BE you have to check the submarket!</b></p>
+        </li>
+        <li>
+          <p>
+            If you have the setting that automatically navigates to newly
+            created workflow checked, and the new workflow <b>IS NOT</b> empty,
+            it means that the workflow with same id was already created, you
+            will have to double check and delete the workflow you created.
+          </p>
+        </li>
+      </ul>
+
+      <p>Enjoy and contact Farid Mammadbayov for extra info.</p>
+      <p>
+        Also check out my
+        <a
+          href="https://chrome.google.com/webstore/detail/scripts-extension/foaaohppnhldabdfioogalbijdpfohoa?hl=en&authuser=1"
+          >other</a
+        >
+        extension that is essentially old scripts on steroids.
+      </p>
+    </div>
+  </body>
+</html>
