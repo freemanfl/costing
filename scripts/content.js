@@ -1,3 +1,5 @@
+// Initial setup and scraping of the info
+////////////////////////////////////////////////////////////////////////////////////////////////
 let demand = {
   id: '',
   name: '',
@@ -27,14 +29,14 @@ let demand = {
     printer: 'MALFINI, a.s.',
     language: "čeština",
     result: [
-      {
-        name: '',
-        price: 'CZK 32.90',
-        surcharge: '18,5167 %',
-        customerBrandingPrice: 'EUR 1.60',
-        customerTotalPrice: 'EUR 1.60',
+      // {
+      //   name: '',
+      //   pprice: 'CZK 32.90',
+      //   surcharge: '18,5167 %',
+      //   customerBrandingPrice: 'EUR 1.60',
+      //   customerTotalPrice: 'EUR 1.60',
 
-      }
+      // }
     ]
   },
 
@@ -121,7 +123,7 @@ const scrapeCommodities = () => {
 
 
   demand.commodities.forEach((commodity) => {
-    console.log(commodity.id)
+
     for (var e = 0; e < subrows.length; e++) {
       if (commodity.id === subrows[e].id) {
         commodity.nomenclatures.push(subrows[e])
@@ -171,17 +173,79 @@ const scrapeBranding = () => {
     tempcolumns[i].textileColor = brows[4].children[i + 1].innerText;
   }
 
-  demand.branding = tempcolumns
+  demand.branding = tempcolumns;
+  demand.language
+}
+
+const scrapeCalc = () => {
+  let tempcolumns = [];
+
+  demand.calculator.printer = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(4) > div.ant-card-body > div > div:nth-child(1) > div > form > div.col-span-2.flex.items-center.justify-between.px-4.py-2.border.border-inherit > div.w-full").innerText
+  demand.calculator.language = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(4) > div.ant-card-body > div > div:nth-child(1) > div > form > div:nth-child(3)").innerText;
+
+  const cheadd = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(4) > div.ant-card-body > div > div.flex-1.pt-4.relative.overflow-x-auto > form > table > thead").firstChild.children;
+  const chead = [];
+  const cbodyy = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(4) > div.ant-card-body > div > div.flex-1.pt-4.relative.overflow-x-auto > form > table > tbody").children;
+  const cbody = [];
+
+  for (let item of cheadd) {
+    chead.push(item);
+  }
+
+  for (let item of cbodyy) {
+    cbody.push(item);
+  }
+
+  // Add names as new objects 
+
+  for (let i = 0; i < chead.length; i++) {
+    if (i > 0) {
+      demand.calculator.result.push({
+        name: chead[i].firstChild.children[1].firstChild.innerText,
+      })
+    }
+  }
+
+  // Add printer's price to objects in results
+
+  for (let i = 0; i < demand.calculator.result.length; i++) {
+    demand.calculator.result[i].pprice = cbody[0].children[1].firstChild.innerText
+  }
+
+  // Add subcharge for branding 
+
+  for (let i = 0; i < demand.calculator.result.length; i++) {
+    demand.calculator.result[i].subcharge = cbody[3].children[i + 1].innerText
+  }
+
+
+  // Add customer price for branding 
+
+  for (let i = 0; i < demand.calculator.result.length; i++) {
+    demand.calculator.result[i].cprice = cbody[6].children[i + 1].innerText
+  }
+
+  // Add total price for branding 
+
+  for (let i = 0; i < demand.calculator.result.length; i++) {
+    demand.calculator.result[i].totalPrice = cbody[8].children[i + 1].innerText
+  }
+
 
 
 }
 
 
 
+
+// Additio of the overlay
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 scrapeInfo();
 scrapeCommodities();
 scrapeBranding();
+scrapeCalc();
 
-console.log(demand)
-
-
+console.log(demand);
