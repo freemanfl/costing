@@ -41,6 +41,7 @@ let demand = {
 
 }
 
+
 const scrapeInfo = () => {
 
   demand.id = document.querySelector("#layout-content > div > div.ant-page-header.has-footer > div.ant-page-header-heading > div > span > div > div:nth-child(1) > span").innerText;
@@ -133,6 +134,45 @@ const scrapeCommodities = () => {
 }
 
 const scrapeBranding = () => {
+  const bbody = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(3) > div.ant-card-body > div > table > tbody");
+  var browss = bbody.querySelectorAll('tr');
+  var brows = [];
+  var tempcolumns = [];
+
+  // Transofrm HTML collection to normal array
+  for (let item of browss) {
+    brows.push(item);
+  }
+
+  // Get names and create the initial array of brandings
+  for (let i = 0; i < brows[0].children.length; i++) {
+    if (i > 0) {
+      tempcolumns.push({
+        name: brows[0].children[i].innerText,
+      })
+    }
+  }
+
+  // Get logo placements for each item in the array
+  for (let i = 0; i < tempcolumns.length; i++) {
+    tempcolumns[i].placement = brows[1].children[i + 1].innerText;
+  }
+
+  // Get service for each item in the array
+  for (let i = 0; i < tempcolumns.length; i++) {
+    tempcolumns[i].service = brows[2].children[i + 1].innerText;
+  }
+  // Get logo size for each item in the array
+  for (let i = 0; i < tempcolumns.length; i++) {
+    tempcolumns[i].logoSize = brows[3].children[i + 1].innerText;
+  }
+  // Get textile color for each item in the array
+  for (let i = 0; i < tempcolumns.length; i++) {
+    tempcolumns[i].textileColor = brows[4].children[i + 1].innerText;
+  }
+
+  demand.branding = tempcolumns
+
 
 }
 
@@ -142,6 +182,6 @@ scrapeInfo();
 scrapeCommodities();
 scrapeBranding();
 
-
+console.log(demand)
 
 
