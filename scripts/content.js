@@ -105,10 +105,14 @@ const scrapeCommodities = () => {
   for (var i = 0; i < rows.length; i++) {
 
     if (rows[i].offsetHeight !== mainHeight) {
+
+
+
       let pl = rows[i].firstChild.firstChild.children[1].firstChild.firstChild.firstChild.innerText;
       var nomId = rows[i].firstChild.firstChild.children[1].firstChild.innerText.substring(1, 5).trim();
       let name = rows[i].firstChild.firstChild.children[1].firstChild.innerText.substring(6,);
       let price = rows[i].firstChild.firstChild.children[1].children[1].children[1].innerText;
+      let pcs = rows[i].children[1].innerText;
 
 
       subrows.push({
@@ -116,6 +120,7 @@ const scrapeCommodities = () => {
         name: name,
         pl: pl,
         price: price,
+        pcs: pcs,
       })
     }
   }
@@ -238,8 +243,124 @@ const scrapeCalc = () => {
 
 
 
-// Additio of the overlay
+// Addition of the overlay
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+const createOverlay = () => {
+  const nav = document.querySelector("#root > main > nav");
+
+  // Create a new div element
+  var newDiv = document.createElement('div');
+
+  newDiv.classList.add('extension-overlay');
+
+  newDiv.innerHTML = `
+      <div class="overlay-overview">
+      <p>${demand.id}</p>
+      <p>${demand.name}</p>
+      <p>${demand.created}</p>
+      <p>${demand.creator}</p>
+      <p>${demand.client}</p>
+      <p>${demand.currency}</p>
+      <p>${demand.delivery}</p>
+      <p>${demand.deliveryAddress}</p>
+      <p>${demand.paymentMethod}</p>
+      <p>${demand.state}</p>
+    </div>
+
+    <div class="overlay-table-container">
+        
+    </div>
+
+    <div class="overlay-controls-container"> </div>
+`
+
+  // Attach the new div to the "nav" element
+  if (nav) {
+    nav.appendChild(newDiv);
+  } else {
+    console.error('Element with ID "navbar" not found.');
+  }
+
+
+  demand.commodities.forEach((commodity) => {
+    let newRow = document.createElement('div');
+    newRow.classList.add('commodity-row')
+    newRow.innerHTML = `
+    <div class="commodity-id">${commodity.id}</div>
+    <div class="commodity-name">${commodity.name}</div>
+    <div class="commodity-pcs">${commodity.pcs}</div>
+    <div class="commodity-branding">${commodity.branding}</div>
+    `
+    if (commodity.nomenclatures.length > 0) {
+
+      commodity.nomenclatures.forEach((nomenclature) => {
+
+        let newSubrow = document.createElement('div');
+        newSubrow.classList.add('commodity-subrow');
+        newSubrow.innerHTML = `
+
+          <div class="nomenclature-id">${nomenclature.id}</div>
+          <div class="nomenclature-name">${nomenclature.name}</div>
+          <input type="number" value="${nomenclature.pcs}" class="nomenclature-pcs"></input>
+          <div class="nomenclature-price">${nomenclature.price}</div>
+          <div class="nomenclature-pl">${nomenclature.pl}</div>
+          
+
+        `
+
+        newRow.appendChild(newSubrow)
+      })
+    }
+
+    document.querySelector('.overlay-table-container').appendChild(newRow)
+
+
+
+  })
+
+  let inputs = document.querySelector('.extension-overlay').querySelectorAll('input')
+
+  inputs.forEach((input) => {
+
+    input.addEventListener('input', () => {
+
+      let grandpa = input.parentNode.parentNode;
+      let grandpaInputs = grandpa.querySelectorAll('input')
+      let pcsArray = []
+
+      for (let i = 0; i < grandpaInputs.length; i++) {
+
+        pcsArray.push(grandpaInputs[i].value)
+
+      }
+
+      console.log(grandpa.children[2].innerText)
+      grandpa.children[2].innerText = pcsArray
+        .map(function (elt) { // assure the value can be converted into an integer
+          return /^\d+$/.test(elt) ? parseInt(elt) : 0;
+        })
+        .reduce(function (a, b) { // sum all resulting numbers
+          return a + b
+        })
+    })
+
+
+
+  })
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -247,5 +368,6 @@ scrapeInfo();
 scrapeCommodities();
 scrapeBranding();
 scrapeCalc();
+createOverlay();
 
 console.log(demand);
