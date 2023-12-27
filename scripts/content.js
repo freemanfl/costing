@@ -43,19 +43,22 @@ let demand = {
 
 }
 
-
 const scrapeInfo = () => {
+	let idCont = document.getElementById("layout-content").firstChild.firstChild.firstChild.firstChild.firstChild; 
 
-  demand.id = document.querySelector("#layout-content > div > div.ant-page-header.has-footer > div.ant-page-header-heading > div > span > div > div:nth-child(1) > span").innerText;
-  demand.name = document.querySelector("#layout-content > div > div.ant-page-header.has-footer > div.ant-page-header-heading > div > span > div > div:nth-child(2)").innerText;
-  demand.state = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(1) > td > span > span").innerText
-  demand.currency = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(3) > td > span").innerText
+  demand.id = idCont.children[0].firstChild.firstChild.innerText
+  demand.name = idCont.firstChild.children[1].innerText;
+  demand.state = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(1) > td > span > span").innerText;
+  demand.currency = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(3) > td > span").innerText;
   demand.created = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(4) > td > span").innerText;
   demand.delivery = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(7) > td:nth-child(2) > span").innerText;
   demand.deliveryAddress = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(8) > td > span").innerText;
   demand.paymentMethod = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.ant-descriptions.ant-descriptions-small.ant-descriptions-bordered > div > table > tbody > tr:nth-child(7) > td:nth-child(4) > span").innerText
   demand.creator = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.flex.flex-col.gap-2 > div:nth-child(1) > div > div > span > div > div:nth-child(3) > div > div:nth-child(2)").innerText;
   demand.client = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.flex.flex-col.gap-2 > div:nth-child(2) > div > div > span > div > div:nth-child(3) > div > div:nth-child(1)").innerText;
+
+
+	console.log(demand);
 }
 
 const scrapeCommodities = () => {
@@ -107,7 +110,7 @@ const scrapeCommodities = () => {
     if (rows[i].offsetHeight !== mainHeight) {
 
 
-
+		console.log()
       let pl = rows[i].firstChild.firstChild.children[1].firstChild.firstChild.firstChild.innerText;
       var nomId = rows[i].firstChild.firstChild.children[1].firstChild.innerText.substring(1, 5).trim();
       let name = rows[i].firstChild.firstChild.children[1].firstChild.innerText.substring(6,);
@@ -136,7 +139,6 @@ const scrapeCommodities = () => {
     }
   })
 
-  console.log(demand)
 
 }
 
@@ -273,7 +275,10 @@ const createOverlay = () => {
         
     </div>
 
-    <div class="overlay-controls-container"> </div>
+    <div class="overlay-controls-container">
+      <button class="save">Save changes</button>
+      <button class="apply-changes">Apply changes</button>
+    </div>
 `
 
   // Attach the new div to the "nav" element
@@ -336,7 +341,7 @@ const createOverlay = () => {
 
       }
 
-      console.log(grandpa.children[2].innerText)
+
       grandpa.children[2].innerText = pcsArray
         .map(function (elt) { // assure the value can be converted into an integer
           return /^\d+$/.test(elt) ? parseInt(elt) : 0;
@@ -353,6 +358,42 @@ const createOverlay = () => {
 }
 
 
+const saveOverlay = () => {
+
+
+  let table = document.querySelector('.overlay-table-container');
+  let rows = [];
+
+  for (let i = 0; i < table.children.length; i++) {
+    demand.commodities[i].pcs = table.children[i].children[2].innerText;
+
+
+    for (let e = 0; e < table.children[i].children.length - 4; e++) {
+      demand.commodities[i].nomenclatures[e] = table.children[i].children[4].children[2].value
+    }
+  }
+
+
+
+
+
+
+  console.log(demand)
+
+}
+
+
+
+
+window.addEventListener('load', function () {
+  setTimeout(()=> {
+	  scrapeInfo();
+		scrapeCommodities();
+		scrapeBranding();
+		scrapeCalc();
+		createOverlay();
+  }, 2000)
+})
 
 
 
@@ -360,14 +401,10 @@ const createOverlay = () => {
 
 
 
+console.log(document.querySelector('.overlay-controls-container').children[0])
+document.querySelector('.overlay-controls-container').children[0].addEventListener('click', saveOverlay)
 
 
 
-
-scrapeInfo();
-scrapeCommodities();
-scrapeBranding();
-scrapeCalc();
-createOverlay();
 
 console.log(demand);
