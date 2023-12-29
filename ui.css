@@ -1,7 +1,7 @@
 .extension-overlay {
   background-color: #fff;
-  width: 1200px;
-  height: 800px;
+  width: 12px;
+  height: 8px;
   /* width: 20px;
   height: 20px; */
   position: absolute;
@@ -10,7 +10,7 @@
   z-index: 100;
   transition: all 0.5s ease-in-out;
   padding: 5px 10px;
-  overflow: hidden;
+  overflow: scroll;
   border-radius: 10px;
   border: 1px solid rgb(57, 162, 214);
   display: flex;

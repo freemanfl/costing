@@ -44,7 +44,7 @@ let demand = {
 }
 
 const scrapeInfo = () => {
-	let idCont = document.getElementById("layout-content").firstChild.firstChild.firstChild.firstChild.firstChild; 
+  let idCont = document.getElementById("layout-content").firstChild.firstChild.firstChild.firstChild.firstChild;
 
   demand.id = idCont.children[0].firstChild.firstChild.innerText
   demand.name = idCont.firstChild.children[1].innerText;
@@ -57,8 +57,6 @@ const scrapeInfo = () => {
   demand.creator = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.flex.flex-col.gap-2 > div:nth-child(1) > div > div > span > div > div:nth-child(3) > div > div:nth-child(2)").innerText;
   demand.client = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div.ant-card.ant-card-bordered.\\!mb-8 > div > div > div.flex.flex-col.gap-2 > div:nth-child(2) > div > div > span > div > div:nth-child(3) > div > div:nth-child(1)").innerText;
 
-
-	console.log(demand);
 }
 
 const scrapeCommodities = () => {
@@ -67,80 +65,92 @@ const scrapeCommodities = () => {
   // Find all rows in the table body
   var rowss = tbody.querySelectorAll('tr');
   var rows = [];
-  var subrows = [];
+  const result = {
+    mainRows: [],
+  };
+
+
   for (let item of rowss) {
     rows.push(item);
   }
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Initialize an array to store the rows
-
   const mainHeight = rows[0].offsetHeight;
 
 
-  // First loop to find main ones
-  for (var i = 0; i < rows.length; i++) {
+  // Temporary variables to keep track of the current main row and sub row
+  let currentMainRow = null;
+  let currentSubRow = null;
 
-    if (rows[i].offsetHeight == mainHeight) {
-      let id = rows[i].children[0].children[0].innerText.substring(0, 3);
-      let name = rows[i].children[0].children[0].innerText.substring(3,);
-      let pcs = rows[i].children[1].firstChild.innerText;
+  // Iterate over each row
+  rows.forEach(rowElement => {
+    if (rowElement.offsetHeight == mainHeight) {
+
+
       let bra = [];
-      for (let item of rows[i].children[4].children) {
+      for (let item of rowElement.children[4].children) {
         bra.push(item.innerText);
       }
 
-
-      demand.commodities.push({
-        id: id,
-        name: name,
-        branding: bra,
-        pcs: pcs,
+      currentMainRow = {
+        id: rowElement.children[0].children[0].innerText.substring(0, 3),
+        name: rowElement.children[0].children[0].innerText.substring(3,),
+        pcs: rowElement.children[1].firstChild.innerText,
+        bra: bra,
         nomenclatures: [],
-      })
+      };
+      // Add the main row to the result object
+      demand.commodities.push(currentMainRow);
 
-    }
-  }
+      // Reset the current subrow
+      currentSubRow = null;
+    } else if (rowElement.offsetHeight !== mainHeight && rowElement.firstChild.firstChild.firstChild.innerText == "" && rowElement.firstChild.firstChild.children[1].innerText !== "") {
 
+      // If it's a second-level row, create a new subrow object
 
-  // Second loop to find sub rows
+      let pl = rowElement.firstChild.firstChild.children[1].firstChild.firstChild.firstChild.innerText;
+      var nomId = rowElement.firstChild.firstChild.children[1].firstChild.innerText.substring(1, 5).trim();
+      let name = rowElement.firstChild.firstChild.children[1].firstChild.innerText.substring(6,);
+      let price = rowElement.firstChild.firstChild.children[1].children[1].children[1].innerText;
+      let pcs = rowElement.children[1].innerText;
 
-  for (var i = 0; i < rows.length; i++) {
-
-    if (rows[i].offsetHeight !== mainHeight) {
-
-
-		console.log()
-      let pl = rows[i].firstChild.firstChild.children[1].firstChild.firstChild.firstChild.innerText;
-      var nomId = rows[i].firstChild.firstChild.children[1].firstChild.innerText.substring(1, 5).trim();
-      let name = rows[i].firstChild.firstChild.children[1].firstChild.innerText.substring(6,);
-      let price = rows[i].firstChild.firstChild.children[1].children[1].children[1].innerText;
-      let pcs = rows[i].children[1].innerText;
-
-
-      subrows.push({
+      currentSubRow = {
+        pl: pl,
         id: nomId,
         name: name,
-        pl: pl,
         price: price,
         pcs: pcs,
-      })
+        sku: [],
+      };
+      // Add the subrow to the current main row
+      currentMainRow.nomenclatures.push(currentSubRow);
+
+    } else if (rowElement.offsetHeight !== mainHeight && rowElement.firstChild.firstChild.firstChild.innerText == "" && rowElement.firstChild.firstChild.children[1].innerText == "") {
+
+      // If it's a third-level row, create a new third-level row object
+
+      let id = rowElement.firstChild.firstChild.children[2].firstChild.childNodes[0].nodeValue;
+      let name = rowElement.firstChild.firstChild.children[2].firstChild.childNodes[2].nodeValue;
+      let pcs = rowElement.children[1].innerText;
+      let price = rowElement.children[2].firstChild.firstChild.innerText;
+
+      const thirdLevelRow = {
+        id: id,
+        name: name,
+
+        price: price,
+        pcs: pcs,
+      };
+
+      // Add the third-level row to the current subrow
+      currentSubRow.sku.push(thirdLevelRow);
     }
-  }
+  });
 
-
-
-  demand.commodities.forEach((commodity) => {
-
-    for (var e = 0; e < subrows.length; e++) {
-      if (commodity.id === subrows[e].id) {
-        commodity.nomenclatures.push(subrows[e])
-      }
-    }
-  })
-
+  console.log(demand);
 
 }
+
+
+
 
 const scrapeBranding = () => {
   const bbody = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(3) > div.ant-card-body > div > table > tbody");
@@ -386,12 +396,16 @@ const saveOverlay = () => {
 
 
 window.addEventListener('load', function () {
-  setTimeout(()=> {
-	  scrapeInfo();
-		scrapeCommodities();
-		scrapeBranding();
-		scrapeCalc();
-		createOverlay();
+  setTimeout(() => {
+    scrapeInfo();
+    scrapeCommodities();
+    scrapeBranding();
+    scrapeCalc();
+    createOverlay();
+
+
+    console.log(document.querySelector('.overlay-controls-container').children[0])
+    document.querySelector('.overlay-controls-container').children[0].addEventListener('click', saveOverlay)
   }, 2000)
 })
 
@@ -401,10 +415,9 @@ window.addEventListener('load', function () {
 
 
 
-console.log(document.querySelector('.overlay-controls-container').children[0])
-document.querySelector('.overlay-controls-container').children[0].addEventListener('click', saveOverlay)
 
 
 
 
-console.log(demand);
+
+
