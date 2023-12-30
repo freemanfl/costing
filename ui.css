@@ -9,8 +9,8 @@
   font-size: 10px;
   background-color: var(--bg);
   width: 500px;
-  height: 600px;
-  max-height: 600px;
+  max-height: 95vh;
+  height: 95vh;
   /* width: 20px;
   height: 20px; */
   position: absolute;
@@ -18,13 +18,13 @@
   left: 10px;
   z-index: 100;
   transition: all 0.5s ease-in-out;
-  padding: 5px 10px;
+  padding: 5px 4px;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid rgb(57, 162, 214);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .extension-overlay::before {
@@ -38,7 +38,7 @@
 
 .extension-overlay:hover {
   width: 500px;
-  height: 60 0px;
+  height: 95vh;
 }
 
 
@@ -53,6 +53,7 @@
   grid-template-columns: repeat(5, auto);
   /* 3 columns with equal width */
   grid-template-rows: repeat(2, 20px);
+  gap: 3px;
 }
 
 
@@ -63,6 +64,7 @@
   overflow-x: hidden;
   flex-direction: column;
   gap: 10px;
+  scroll-behavior: smooth !important;
 }
 
 .overlay-table-container::-webkit-scrollbar {
@@ -79,6 +81,7 @@
   border-radius: 5px;
   background-color: var(--first);
   padding: 5px 5px;
+  cursor: pointer;
 }
 
 .commodity-subrow {
@@ -92,7 +95,7 @@
   padding: 5px;
   background-color: var(--second);
   border-radius: 5px;
-
+  cursor: pointer;
 }
 
 .commodity-subsubrow {
@@ -105,7 +108,7 @@
   padding: 5px;
   background-color: var(--third);
   border-radius: 5px;
-
+  cursor: pointer;
 }
 
 .commodity-subrow:first-child {}
@@ -133,4 +136,19 @@
 
 .commodity-pcs {
   overflow: hidden;
+}
+
+.overlay-controls-container {
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.overlay-controls-container button {
+  font-size: 16px;
+  padding: 5px 8px;
+  border: 1px solid var(--third);
+  font-weight: 600;
 }

@@ -144,9 +144,6 @@ const scrapeCommodities = () => {
       currentSubRow.sku.push(thirdLevelRow);
     }
   });
-
-  console.log(demand);
-
 }
 
 
@@ -445,15 +442,30 @@ const saveOverlay = () => {
 
 
   let table = document.querySelector('.overlay-table-container');
+
+
   let rows = [];
 
   for (let i = 0; i < table.children.length; i++) {
+
+    // set demand comomdities pcs
     demand.commodities[i].pcs = table.children[i].children[2].innerText;
 
 
     for (let e = 0; e < table.children[i].children.length - 4; e++) {
-      demand.commodities[i].nomenclatures[e] = table.children[i].children[4].children[2].value
+      demand.commodities[i].nomenclatures[e].pcs = table.children[i].children[4].children[2].value;
+
+
+      // demand.commodities[i].nomenclature[e].sku[t].pcs = 
+
+      for (let t = 0; t < table.children[i].children[4].children.length - 5; t++) {
+
+        demand.commodities[i].nomenclatures[e].sku[t].pcs = table.children[i].children[4].children[t + 5].children[2].value
+
+      }
     }
+
+
   }
 
 
