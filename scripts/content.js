@@ -306,7 +306,7 @@ const createOverlay = () => {
     <div class="commodity-id">${commodity.id}</div>
     <div class="commodity-name">${commodity.name}</div>
     <div class="commodity-pcs">${commodity.pcs}</div>
-    <div class="commodity-branding">${commodity.branding}</div>
+    <div class="commodity-branding">${commodity.bra}</div>
     `
     if (commodity.nomenclatures.length > 0) {
 
@@ -322,10 +322,25 @@ const createOverlay = () => {
           <div class="nomenclature-price">${nomenclature.price}</div>
           <div class="nomenclature-pl">${nomenclature.pl}</div>
           
-
         `
+        if (nomenclature.sku.length > 0) {
+          nomenclature.sku.forEach((sku) => {
+            let newSubSubrow = document.createElement('div');
+            newSubSubrow.classList.add('commodity-subsubrow');
+            newSubSubrow.innerHTML = `
+                <div class="sku-id">${sku.id}</div>
+                <div class="sku-name">${sku.name}</div>
+                <input type="number" value="${sku.pcs}" class="sku-pcs"></input>
+                <div class="sku-price">${sku.price}</div>
+            `
 
+            newSubrow.appendChild(newSubSubrow)
+          })
+
+        }
         newRow.appendChild(newSubrow)
+
+
       })
     }
 
@@ -337,33 +352,91 @@ const createOverlay = () => {
 
   let inputs = document.querySelector('.extension-overlay').querySelectorAll('input')
 
+  let nomInputs = [];
+
+
+
   inputs.forEach((input) => {
 
-    input.addEventListener('input', () => {
+    if (input.classList.contains('sku-pcs')) {
+      input.addEventListener('input', () => {
+        let skuInputs = [];
+        let grandpa = input.parentNode.parentNode;
+        let grandpaSkuInputs = grandpa.querySelectorAll(".sku-pcs");
 
-      let grandpa = input.parentNode.parentNode;
-      let grandpaInputs = grandpa.querySelectorAll('input')
-      let pcsArray = []
+        for (let i = 0; i < grandpaSkuInputs.length; i++) {
+          skuInputs.push(grandpaSkuInputs[i].value)
+        }
+        grandpa.children[2].value = skuInputs
+          .map(function (elt) { // assure the value can be converted into an integer
+            return /^\d+$/.test(elt) ? parseInt(elt) : 0;
+          })
+          .reduce(function (a, b) { // sum all resulting numbers
+            return a + b
+          })
 
-      for (let i = 0; i < grandpaInputs.length; i++) {
-
-        pcsArray.push(grandpaInputs[i].value)
-
-      }
+        grandpa.children[2].dispatchEvent(new InputEvent("input"));
 
 
-      grandpa.children[2].innerText = pcsArray
-        .map(function (elt) { // assure the value can be converted into an integer
-          return /^\d+$/.test(elt) ? parseInt(elt) : 0;
-        })
-        .reduce(function (a, b) { // sum all resulting numbers
-          return a + b
-        })
-    })
+      });
+    }
+
+    else if (input.classList.contains('nomenclature-pcs')) {
+      input.addEventListener('input', () => {
+        let nomInputs = [];
+        let grandpa = input.parentNode.parentNode;
+        let grandpaNomInputs = grandpa.querySelectorAll(".nomenclature-pcs");
+
+
+        for (let i = 0; i < grandpaNomInputs.length; i++) {
+          nomInputs.push(grandpaNomInputs[i].value)
+        }
+
+        grandpa.children[2].innerText = String(nomInputs
+          .map(function (elt) { // assure the value can be converted into an integer
+            return /^\d+$/.test(elt) ? parseInt(elt) : 0;
+          })
+          .reduce(function (a, b) { // sum all resulting numbers
+            return a + b
+          }))
+
+
+
+      });
+
+
+    }
+
+
+
+    // input.addEventListener('input', () => {
+
+
+
+    //   let grandpa = input.parentNode.parentNode;
+    //   let grandpaInputs = grandpa.querySelectorAll('input')
+    //   let pcsArray = []
+
+    //   for (let i = 0; i < grandpaInputs.length; i++) {
+
+    //     pcsArray.push(grandpaInputs[i].value)
+
+    //   }
+
+
+    // grandpa.children[2].innerText = pcsArray
+    //   .map(function (elt) { // assure the value can be converted into an integer
+    //     return /^\d+$/.test(elt) ? parseInt(elt) : 0;
+    //   })
+    //   .reduce(function (a, b) { // sum all resulting numbers
+    //     return a + b
+    //   })
+    // })
 
 
 
   })
+
 
 }
 
@@ -406,7 +479,7 @@ window.addEventListener('load', function () {
 
     console.log(document.querySelector('.overlay-controls-container').children[0])
     document.querySelector('.overlay-controls-container').children[0].addEventListener('click', saveOverlay)
-  }, 2000)
+  }, 500)
 })
 
 

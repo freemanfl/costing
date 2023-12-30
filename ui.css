@@ -1,7 +1,16 @@
 .extension-overlay {
-  background-color: #fff;
-  width: 12px;
-  height: 8px;
+  --bg: #f5f5f9;
+  --first: #d8d8eb;
+  --second: #b3b3e6;
+  --third: #9999cc;
+}
+
+.extension-overlay {
+  font-size: 10px;
+  background-color: var(--bg);
+  width: 500px;
+  height: 600px;
+  max-height: 600px;
   /* width: 20px;
   height: 20px; */
   position: absolute;
@@ -10,7 +19,7 @@
   z-index: 100;
   transition: all 0.5s ease-in-out;
   padding: 5px 10px;
-  overflow: scroll;
+  overflow: hidden;
   border-radius: 10px;
   border: 1px solid rgb(57, 162, 214);
   display: flex;
@@ -28,9 +37,10 @@
 
 
 .extension-overlay:hover {
-  width: 1200px;
-  height: 800px;
+  width: 500px;
+  height: 60 0px;
 }
+
 
 .extension-overlay p {
   display: inline;
@@ -40,41 +50,60 @@
 .overlay-overview {
 
   display: inline-grid;
-  grid-template-columns: repeat(5, 320px);
+  grid-template-columns: repeat(5, auto);
   /* 3 columns with equal width */
-  grid-template-rows: repeat(2, 40px);
+  grid-template-rows: repeat(2, 20px);
 }
 
 
 .overlay-table-container {
   height: 100%;
   display: flex;
-
+  overflow-y: scroll;
+  overflow-x: hidden;
   flex-direction: column;
   gap: 10px;
+}
+
+.overlay-table-container::-webkit-scrollbar {
+  display: none;
 }
 
 .commodity-row {
   display: inline-grid;
   grid-template-rows: auto auto;
-  grid-template-columns: 20px 380px 50px 360px;
-  gap: 20px;
-  font-size: 18px;
+  grid-template-columns: 20px 260px 30px 60px;
+  gap: 10px;
+  font-size: 12px;
   font-weight: bold;
   border-radius: 5px;
-  background-color: rgb(241, 241, 241);
-  padding: 10px 10px;
+  background-color: var(--first);
+  padding: 5px 5px;
 }
 
 .commodity-subrow {
-  grid-column: span 4;
+  grid-column: span 5;
   display: inline-grid;
-  grid-template-rows: auto;
-  grid-template-columns: 20px 380px 60px 120px 30px;
-  gap: 20px;
+
+  grid-template-columns: 25px 265px 40px 60px 10px;
+
+  gap: 5px;
   font-weight: normal;
   padding: 5px;
-  background-color: rgba(209, 209, 209, 0.46);
+  background-color: var(--second);
+  border-radius: 5px;
+
+}
+
+.commodity-subsubrow {
+  grid-column: span 5;
+  display: inline-grid;
+  grid-template-rows: auto;
+  grid-template-columns: 50px 240px 30px 40px;
+  gap: 5px;
+  font-weight: normal;
+  padding: 5px;
+  background-color: var(--third);
   border-radius: 5px;
 
 }
