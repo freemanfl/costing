@@ -263,7 +263,7 @@ const createOverlay = () => {
   var newDiv = document.createElement('div');
 
   newDiv.classList.add('extension-overlay');
-
+  newDiv.id = 'backgroundOverlay'
   newDiv.innerHTML = `
       <div class="overlay-overview">
       <p>${demand.id}</p>
@@ -283,14 +283,31 @@ const createOverlay = () => {
     </div>
 
     <div class="overlay-controls-container">
-      <button class="save">Save changes</button>
-      <button class="apply-changes">Apply changes</button>
+
+        <button class="save">Save changes</button>
+        <button class="apply-changes">Apply changes</button>
+    
     </div>
 `
 
   // Attach the new div to the "nav" element
   if (nav) {
     nav.appendChild(newDiv);
+
+    newDiv.addEventListener('click', () => {
+      if (!newDiv.classList.contains('extension-overlay-revealed')) {
+        newDiv.classList.toggle('extension-overlay-revealed');
+      }
+    })
+
+    document.addEventListener('mouseup', function (e) {
+
+      if (!newDiv.contains(e.target)) {
+        newDiv.classList.toggle('extension-overlay-revealed');
+      }
+    });
+
+
   } else {
     console.error('Element with ID "navbar" not found.');
   }
