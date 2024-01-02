@@ -99,14 +99,14 @@ const scrapeCommodities = () => {
         bra: bra,
         nomenclatures: [],
       };
-      // Add the main row to the result object
+      // Add the main row to the result demandect
       demand.commodities.push(currentMainRow);
 
       // Reset the current subrow
       currentSubRow = null;
     } else if (rowElement.offsetHeight !== mainHeight && rowElement.firstChild.firstChild.firstChild.innerText == "" && rowElement.firstChild.firstChild.children[1].innerText !== "") {
 
-      // If it's a second-level row, create a new subrow object
+      // If it's a second-level row, create a new subrow demandect
 
       let pl = rowElement.firstChild.firstChild.children[1].firstChild.firstChild.firstChild.innerText;
       var nomId = rowElement.firstChild.firstChild.children[1].firstChild.innerText.substring(1, 5).trim();
@@ -127,7 +127,7 @@ const scrapeCommodities = () => {
 
     } else if (rowElement.offsetHeight !== mainHeight && rowElement.firstChild.firstChild.firstChild.innerText == "" && rowElement.firstChild.firstChild.children[1].innerText == "") {
 
-      // If it's a third-level row, create a new third-level row object
+      // If it's a third-level row, create a new third-level row demandect
 
       let id = rowElement.firstChild.firstChild.children[2].firstChild.childNodes[0].nodeValue;
       let name = rowElement.firstChild.firstChild.children[2].firstChild.childNodes[2].nodeValue;
@@ -190,7 +190,7 @@ const scrapeBranding = () => {
   }
 
   demand.branding = tempcolumns;
-  
+
 }
 
 const scrapeCalc = () => {
@@ -212,7 +212,7 @@ const scrapeCalc = () => {
     cbody.push(item);
   }
 
-  // Add names as new objects 
+  // Add names as new demandects 
 
   for (let i = 0; i < chead.length; i++) {
     if (i > 0) {
@@ -222,7 +222,7 @@ const scrapeCalc = () => {
     }
   }
 
-  // Add printer's price to objects in results
+  // Add printer's price to demandects in results
 
   for (let i = 0; i < demand.calculator.result.length; i++) {
     demand.calculator.result[i].pprice = cbody[0].children[1].firstChild.innerText
@@ -246,11 +246,6 @@ const scrapeCalc = () => {
   for (let i = 0; i < demand.calculator.result.length; i++) {
     demand.calculator.result[i].totalPrice = cbody[8].children[i + 1].innerText
   }
-	
-	demandBefore = demand;	
-	
-
-
 }
 
 
@@ -319,9 +314,9 @@ const createOverlay = () => {
 
   // Populate with rows
   demand.commodities.forEach((commodity) => {
-	  
-	 // Add Commodities as rows
-	  
+
+    // Add Commodities as rows
+
     let newRow = document.createElement('div');
     newRow.classList.add('commodity-row')
     newRow.innerHTML = `
@@ -330,11 +325,11 @@ const createOverlay = () => {
     <div class="commodity-pcs">${commodity.pcs}</div>
     <div class="commodity-branding">${commodity.bra}</div>
     `
-	
-	// Add Nomenclatures if any
+
+    // Add Nomenclatures if any
     if (commodity.nomenclatures.length > 0) {
       commodity.nomenclatures.forEach((nomenclature) => {
-		  
+
         let newSubrow = document.createElement('div');
         newSubrow.classList.add('commodity-subrow');
         newSubrow.innerHTML = `
@@ -344,9 +339,9 @@ const createOverlay = () => {
           <div class="nomenclature-price">${nomenclature.price}</div>
           <div class="nomenclature-pl">${nomenclature.pl}</div>
         `
-		
-		// Add Skus if any
-		
+
+        // Add Skus if any
+
         if (nomenclature.sku.length > 0) {
           nomenclature.sku.forEach((sku) => {
             let newSubSubrow = document.createElement('div');
@@ -373,8 +368,8 @@ const createOverlay = () => {
   })
 
 
-   // Auto summ calc logic
-   let inputs = document.querySelector('.extension-overlay').querySelectorAll('input')
+  // Auto summ calc logic
+  let inputs = document.querySelector('.extension-overlay').querySelectorAll('input')
   let nomInputs = [];
   inputs.forEach((input) => {
 
@@ -428,12 +423,8 @@ const createOverlay = () => {
 
 
 const saveOverlay = () => {
-	
-  console.log(demandBefore);
-
+  demandBefore = structuredClone(demand);
   let table = document.querySelector('.overlay-table-container');
-
-
   let rows = [];
 
   for (let i = 0; i < table.children.length; i++) {
@@ -443,7 +434,7 @@ const saveOverlay = () => {
 
 
     for (let e = 0; e < table.children[i].children.length - 4; e++) {
-		
+
       demand.commodities[i].nomenclatures[e].pcs = table.children[i].children[4].children[2].value;
 
       for (let t = 0; t < table.children[i].children[4].children.length - 5; t++) {
@@ -456,25 +447,50 @@ const saveOverlay = () => {
 }
 
 
+
+function findPcsDifferences() {
+
+  for (let i = 0; i < demand.commodities.length; i++) {
+
+    if (demand.commodities[i].pcs !== demandBefore.commodities[i].pcs) {
+      for (let e = 0; e < demand.commodities[i].nomenclatures.length; e++) {
+        if (demand.commodities[i].nomenclatures[e].pcs !== demandBefore.commodities[i].nomenclatures[e].pcs) {
+
+          for (let t = 0; t < demand.commodities[i].nomenclatures[e].sku.length; t++) {
+            if (demand.commodities[i].nomenclatures[e].sku[t].pcs !== demandBefore.commodities[i].nomenclatures[e].sku[t].pcs) {
+              demand.commodities[i].nomenclatures[e].sku[t].updated = true;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  console.log(demand);
+
+}
+
+
+
+
+
 window.addEventListener('load', function () {
   setTimeout(() => {
     scrapeInfo();
     scrapeCommodities();
     scrapeBranding();
-    scrapeCalc();	
+    scrapeCalc();
     createOverlay();
-	
-	
-	
-    document.querySelector('.overlay-controls-container').children[0].addEventListener('click', ()=> {
-		console.log('red')
-		saveOverlay();
-		
 
-	})
-  }, 2000)
+
+
+    document.querySelector('.overlay-controls-container').children[0].addEventListener('click', () => {
+
+      saveOverlay();
+      findPcsDifferences()
+    })
+  }, 500)
 })
-
 
 
 
