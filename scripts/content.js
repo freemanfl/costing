@@ -43,6 +43,8 @@ let demand = {
 
 }
 
+let demandBefore;
+
 const scrapeInfo = () => {
   let idCont = document.getElementById("layout-content").firstChild.firstChild.firstChild.firstChild.firstChild;
 
@@ -188,7 +190,7 @@ const scrapeBranding = () => {
   }
 
   demand.branding = tempcolumns;
-  demand.language
+  
 }
 
 const scrapeCalc = () => {
@@ -244,7 +246,9 @@ const scrapeCalc = () => {
   for (let i = 0; i < demand.calculator.result.length; i++) {
     demand.calculator.result[i].totalPrice = cbody[8].children[i + 1].innerText
   }
-
+	
+	demandBefore = demand;	
+	
 
 
 }
@@ -313,7 +317,11 @@ const createOverlay = () => {
   }
 
 
+  // Populate with rows
   demand.commodities.forEach((commodity) => {
+	  
+	 // Add Commodities as rows
+	  
     let newRow = document.createElement('div');
     newRow.classList.add('commodity-row')
     newRow.innerHTML = `
@@ -322,21 +330,23 @@ const createOverlay = () => {
     <div class="commodity-pcs">${commodity.pcs}</div>
     <div class="commodity-branding">${commodity.bra}</div>
     `
+	
+	// Add Nomenclatures if any
     if (commodity.nomenclatures.length > 0) {
-
       commodity.nomenclatures.forEach((nomenclature) => {
-
+		  
         let newSubrow = document.createElement('div');
         newSubrow.classList.add('commodity-subrow');
         newSubrow.innerHTML = `
-
           <div class="nomenclature-id">${nomenclature.id}</div>
           <div class="nomenclature-name">${nomenclature.name}</div>
           <input type="number" value="${nomenclature.pcs}" class="nomenclature-pcs"></input>
           <div class="nomenclature-price">${nomenclature.price}</div>
           <div class="nomenclature-pl">${nomenclature.pl}</div>
-          
         `
+		
+		// Add Skus if any
+		
         if (nomenclature.sku.length > 0) {
           nomenclature.sku.forEach((sku) => {
             let newSubSubrow = document.createElement('div');
@@ -358,18 +368,14 @@ const createOverlay = () => {
       })
     }
 
-    document.querySelector('.overlay-table-container').appendChild(newRow)
-
-
+    document.querySelector('.overlay-table-container').appendChild(newRow);
 
   })
 
-  let inputs = document.querySelector('.extension-overlay').querySelectorAll('input')
 
+   // Auto summ calc logic
+   let inputs = document.querySelector('.extension-overlay').querySelectorAll('input')
   let nomInputs = [];
-
-
-
   inputs.forEach((input) => {
 
     if (input.classList.contains('sku-pcs')) {
@@ -413,42 +419,8 @@ const createOverlay = () => {
           .reduce(function (a, b) { // sum all resulting numbers
             return a + b
           }))
-
-
-
       });
-
-
-    }
-
-
-
-    // input.addEventListener('input', () => {
-
-
-
-    //   let grandpa = input.parentNode.parentNode;
-    //   let grandpaInputs = grandpa.querySelectorAll('input')
-    //   let pcsArray = []
-
-    //   for (let i = 0; i < grandpaInputs.length; i++) {
-
-    //     pcsArray.push(grandpaInputs[i].value)
-
-    //   }
-
-
-    // grandpa.children[2].innerText = pcsArray
-    //   .map(function (elt) { // assure the value can be converted into an integer
-    //     return /^\d+$/.test(elt) ? parseInt(elt) : 0;
-    //   })
-    //   .reduce(function (a, b) { // sum all resulting numbers
-    //     return a + b
-    //   })
-    // })
-
-
-
+    };
   })
 
 
@@ -456,7 +428,8 @@ const createOverlay = () => {
 
 
 const saveOverlay = () => {
-
+	
+  console.log(demandBefore);
 
   let table = document.querySelector('.overlay-table-container');
 
@@ -470,10 +443,8 @@ const saveOverlay = () => {
 
 
     for (let e = 0; e < table.children[i].children.length - 4; e++) {
+		
       demand.commodities[i].nomenclatures[e].pcs = table.children[i].children[4].children[2].value;
-
-
-      // demand.commodities[i].nomenclature[e].sku[t].pcs = 
 
       for (let t = 0; t < table.children[i].children[4].children.length - 5; t++) {
 
@@ -481,20 +452,8 @@ const saveOverlay = () => {
 
       }
     }
-
-
   }
-
-
-
-
-
-
-  console.log(demand)
-
 }
-
-
 
 
 window.addEventListener('load', function () {
@@ -502,15 +461,19 @@ window.addEventListener('load', function () {
     scrapeInfo();
     scrapeCommodities();
     scrapeBranding();
-    scrapeCalc();
+    scrapeCalc();	
     createOverlay();
+	
+	
+	
+    document.querySelector('.overlay-controls-container').children[0].addEventListener('click', ()=> {
+		console.log('red')
+		saveOverlay();
+		
 
-
-    console.log(document.querySelector('.overlay-controls-container').children[0])
-    document.querySelector('.overlay-controls-container').children[0].addEventListener('click', saveOverlay)
-  }, 500)
+	})
+  }, 2000)
 })
-
 
 
 
