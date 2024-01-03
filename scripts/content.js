@@ -299,7 +299,7 @@ const createOverlay = () => {
       }
     })
 
-    document.addEventListener('mouseup', function (e) {
+    document.addEventListener('click', function (e) {
 
       if (!newDiv.contains(e.target)) {
         newDiv.classList.toggle('extension-overlay-revealed');
@@ -453,8 +453,11 @@ function findPcsDifferences() {
   for (let i = 0; i < demand.commodities.length; i++) {
 
     if (demand.commodities[i].pcs !== demandBefore.commodities[i].pcs) {
+      demand.commodities[i].updated = true;
+
       for (let e = 0; e < demand.commodities[i].nomenclatures.length; e++) {
         if (demand.commodities[i].nomenclatures[e].pcs !== demandBefore.commodities[i].nomenclatures[e].pcs) {
+          demand.commodities[i].nomenclatures[e].updated = true;
 
           for (let t = 0; t < demand.commodities[i].nomenclatures[e].sku.length; t++) {
             if (demand.commodities[i].nomenclatures[e].sku[t].pcs !== demandBefore.commodities[i].nomenclatures[e].sku[t].pcs) {
@@ -466,11 +469,52 @@ function findPcsDifferences() {
     }
   }
 
-  console.log(demand);
-
 }
 
+function traverse() {
 
+  let cIndex;
+
+  for (let i = 0; i < demand.commodities.length; i++) {
+
+    if (demand.commodities[i].updated) {
+
+
+      for (let e = 0; e < demand.commodities[i].nomenclatures.length; e++) {
+        if (demand.commodities[i].nomenclatures[e].updated) {
+
+
+          for (let t = 0; t < demand.commodities[i].nomenclatures[e].sku.length; t++) {
+            if (demand.commodities[i].nomenclatures[e].sku[t].updated) {
+              // console.log(demand.commodities[i].nomenclatures[e].sku[t])
+
+              let table = document.querySelector("#layout-content > div > div.grow.p-6.overflow-auto > div:nth-child(2) > div.ant-card-body > form > div > div > div > div > div > div > table > tbody").children;
+
+              for (let o = 0; o < table.length; o++) {
+
+                if (table[o].firstChild.firstChild.childNodes[2]) {
+
+                  if (table[o].firstChild.firstChild.childNodes[2].firstChild.childNodes[0].textContent === demand.commodities[i].nomenclatures[e].sku[t].id) {
+
+                    console.log(table[o].children[1]);
+
+
+                  }
+
+
+
+                  // console.log(t[o].firstChild.firstChild.childNodes[2].firstChild.childNodes[2]);
+                }
+
+              }
+
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 
 
@@ -482,12 +526,12 @@ window.addEventListener('load', function () {
     scrapeCalc();
     createOverlay();
 
-
-
     document.querySelector('.overlay-controls-container').children[0].addEventListener('click', () => {
+      console.log(demand);
 
       saveOverlay();
-      findPcsDifferences()
+      findPcsDifferences();
+      traverse();
     })
   }, 500)
 })
